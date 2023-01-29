@@ -1,7 +1,12 @@
 let currentDay = $('#currentDay');
 
-// Load the page with the current day info displayed
-currentDay.text(moment().format('DD MMM YYYY [at] hh:mm:ss a'));
+// Load functions on page load
+$(document).ready(function () {
+    // Display the current day
+    displayDay()
+    // Display the current schedule
+    displaySchedule();
+});
 
 function displayDay() {
     // New variable to store the current day info
@@ -20,19 +25,32 @@ let container = $('.container');
 
 function displaySchedule() {
     container.empty();
+
     for (let i = 9; i <= 17; i++) {
         // Create the time block div
         let timeBlock = $('<div>');
         // Get the hour
         let hour = moment().hour(i).minute(0).second(0);
-        // Create a p tag
-        let timeParagraph = $('<p>');
+        // Create a p tag for the hour
+        let timeParagraph = $('<p>').text(hour.format('h:mma'));
         // Add hour to the p
         timeParagraph.text(hour.format('h:mma'));
-        // Append the p to the time block
-        timeBlock.append(timeParagraph);
+        // Create an input field for the task
+        let taskInput = $('<input>').attr('type', 'text').attr('class', 'task-input').val(localStorage.getItem(hour.format('h:mma')));
+        // Create a button to save the task
+        let saveButton = $('<button>').text('Save').attr('class', 'save-button');
+        // Append the hour, task input and save button to the time block
+        timeBlock.append(timeParagraph, taskInput, saveButton);
         // Append the time block to the container
         container.append(timeBlock);
+
+        // Add click event to save button
+        saveButton.on('click', function () {
+            // Get the task input value
+            let taskValue = taskInput.val();
+            // Save the task input value to localStorage
+            localStorage.setItem(hour.format('h:mma'), taskValue);
+        });
 
         if (hour.isBefore(moment(), 'hour')) {
             // If the hour has passed, add class 'past'
@@ -47,5 +65,4 @@ function displaySchedule() {
     }
 }
 
-// Call displaySchedule function every 1s
-setInterval(displaySchedule, 1000);
+setTimeout(displaySchedule, timeLeft);
