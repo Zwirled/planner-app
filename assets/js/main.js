@@ -105,17 +105,27 @@ function displaySchedule() {
 /////
 /////
 
-function init() {
-    let currentTime = moment().format('h:mma');
-    if (currentTime === '12:00am') {
-        localStorage.clear();
-    }
-}
-
-/////
-/////
-
+// Variable for time until next hour (on the hour e.g. 10:00am)
 let nextHour = moment().startOf('hour').add(1, 'hour');
-let timeLeft = nextHour.diff(moment());
+// The difference from now until the next hour
+let timeUntilNextHour = nextHour.diff(moment());
 
-setTimeout(displaySchedule, timeLeft);
+// Updates classes on timeblocks every hour
+setTimeout(displaySchedule, timeUntilNextHour);
+
+/////
+/////
+
+// Function to check if it has passed midnight since last update, if it has...
+function init() {
+    // Get the time until the next midnight
+    let nextMidnight = moment().startOf('day').add(1, 'day');
+    // The difference from now until next midnight
+    let timeUntilMidnight = nextMidnight.diff(moment());
+
+    // Creates timer to clear local storage at midnight
+    setTimeout(function () {
+        // Clear local storage
+        localStorage.clear();
+    }, timeUntilMidnight);
+}
