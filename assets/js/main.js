@@ -1,6 +1,3 @@
-// Get current day paragraph to display date/time
-let currentDay = $('#currentDay');
-
 // Load functions on page load
 $(document).ready(function () {
     // Display the current day
@@ -8,6 +5,12 @@ $(document).ready(function () {
     // Display the current schedule
     displaySchedule();
 });
+
+/////
+/////
+
+// Get current day paragraph to display date/time
+let currentDay = $('#currentDay');
 
 // Create the function to display the date/time
 function displayDay() {
@@ -20,8 +23,8 @@ function displayDay() {
 // Call displayDay function every 1s
 setInterval(displayDay, 1000);
 
-////////
-////////
+/////
+/////
 
 // Get the container to display schedule info
 let container = $('.container');
@@ -35,20 +38,28 @@ function displaySchedule() {
 
     // For each hour between 9am and 5pm…
     for (let i = 9; i <= 17; i++) {
-        // Create the time block div
-        let timeBlock = $('<div>');
-        // Get the hour (on the hour)
+        // Create the time block div, add class row
+        let timeBlock = $('<div>').attr('class', 'row time-block');
+
+        // Get the hour (on the hour e.g. 9:00am)
         let hour = moment().hour(i).minute(0).second(0);
         // Create a p tag for the hour, and add text
-        let timeParagraph = $('<p>').text(hour.format('h:mma'));
-        // Create an input field for the task
-        let customDesc = $('<textarea>').attr('type', 'text').attr('class', 'custom-description').val(localStorage.getItem(hour.format('h:mma')));
+        let timeParagraph = $('<p>').text(hour.format('h:mma')).attr('class', 'col-2 hour');
+        // Create an input field for the users inputted description (stored in local)
+        let customDesc = $('<textarea>').attr('type', 'text').val(localStorage.getItem(hour.format('h:mma'))).attr('class', 'col-8');
         // Create a button to save the task
-        let saveButton = $('<button>').attr('class', 'saveBtn fas fa-bookmark');
-        // Append the hour, task input and save button to the time block
+        let saveButton = $('<button>').attr('class', 'saveBtn col-2');
+        // Create the font awesome icon within the button
+        let icon = $('<i>').attr('class', 'fa fa-solid fa-bookmark');
+        saveButton.append(icon);
+
+        // Append the paragraph, textarea and button to the time block div
         timeBlock.append(timeParagraph, customDesc, saveButton);
         // Append the time block to the container
         container.append(timeBlock);
+
+        /////
+        /////
 
         // Add click event to save button
         saveButton.on('click', function () {
@@ -58,18 +69,24 @@ function displaySchedule() {
             localStorage.setItem(hour.format('h:mma'), taskValue);
         });
 
+        /////
+        /////
+
         if (hour.isBefore(moment(), 'hour')) {
             // If the hour has passed, add class 'past'
-            timeBlock.addClass('past');
+            customDesc.addClass('past');
         } else if (hour.isSame(moment(), 'hour')) {
             // If the hour is current, add class 'current'
-            timeBlock.addClass('current');
+            customDesc.addClass('current');
         } else if (hour.isAfter(moment(), 'hour')) {
             // If the hour is upcoming, add class 'future'
-            timeBlock.addClass('future');
+            customDesc.addClass('future');
         }
     }
 }
+
+/////
+/////
 
 function init() {
     let currentTime = moment().format('h:mma');
@@ -77,6 +94,9 @@ function init() {
         localStorage.clear();
     }
 }
+
+/////
+/////
 
 let nextHour = moment().startOf('hour').add(1, 'hour');
 let timeLeft = nextHour.diff(moment());
