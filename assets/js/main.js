@@ -44,6 +44,12 @@ function displaySchedule() {
         // Get the hour (on the hour e.g. 9:00am)
         let hour = moment().hour(i).minute(0).second(0);
 
+        // Check if there is data saved in local storage for this hour
+        if (localStorage.getItem(hour.format('h:mma'))) {
+            // If there is data saved, add a class to the timeBlock div
+            timeBlock.addClass('data');
+        }
+
         // Create a p tag for the hour, and add text
         let timeParagraph = $('<p>').text(hour.format('h:mma')).attr('class', 'col-2 hour');
         // Create an input field for the users inputted description (stored in local)
@@ -66,8 +72,18 @@ function displaySchedule() {
         saveButton.on('click', function () {
             // Get the task input value
             let description = customDesc.val();
-            // Save the task input value to localStorage
-            localStorage.setItem(hour.format('h:mma'), description);
+            // Check if the description is empty
+            if (description === '') {
+                // If the description is empty, remove the item from local storage
+                localStorage.removeItem(hour.format('h:mma'));
+                // Remove the class 'data'
+                timeBlock.removeClass('data');
+            } else {
+                // If the description is not empty, add class 'data'
+                timeBlock.addClass('data');
+                // Save the task input value to local storage
+                localStorage.setItem(hour.format('h:mma'), description);
+            }
         });
 
         /////
