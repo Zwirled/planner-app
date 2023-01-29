@@ -15,7 +15,7 @@ let currentDay = $('#currentDay');
 // Create the function to display the date/time
 function displayDay() {
     // New variable to store the current day info
-    let currentInfo = moment().format('DD MMM YYYY [at] hh:mm:ss a');
+    let currentInfo = moment().format('Do MMM YYYY [at] hh:mma');
     // Replace the text with updated info
     currentDay.text(currentInfo);
 }

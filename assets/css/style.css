@@ -1,26 +1,61 @@
+:root {
+    --white: #fafafa;
+
+    --past: #c1c1c1;
+    --current: #17c3b2;
+    --future: #227c9d;
+    --inactiveButton: #ffd695;
+    --activeButton: #ff9505;
+    --hoveredButton: #f35b04;
+    --text: #082f3d;
+}
+
+*:focus {
+    outline: none;
+}
+
+textarea:focus, button:focus {
+    outline: none;
+}
+
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
     line-height: 1;
+    background-color: var(--white);
+}
+
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 42px;
+    color: var(--white);
+}
+
+.lead {
+    font-size: 18px;
 }
 
 textarea {
     background: transparent;
     border: none;
     resize: none;
-    color: #000000;
-    border-left: 1px solid black;
+    color: var(--text);
+    border-left: 1px solid var(--white);
     padding: 10px;
     width: 100%;
     height: 100%;
 }
 
 .jumbotron {
+    background-color: var(--text);
     text-align: center;
-    background-color: transparent;
     color: black;
     border-radius: 0;
-    border-bottom: 10px solid black;
+    border-bottom: 10px solid var(--hoveredButton);
+}
+
+.jumbotron p {
+    color: var(--white);
 }
 
 .description {
@@ -33,7 +68,7 @@ textarea {
 }
 
 .data .saveBtn {
-    background-color: #77dd77;
+    background-color: var(--activeButton);
 }
 
 .container {
@@ -43,39 +78,47 @@ textarea {
 .row {
     white-space: pre-wrap;
     height: 80px;
-    border-top: 1px solid white;
+    border-top: 1px solid var(--white);
 }
 
 .hour {
-    background-color: #ffffff;
-    color: #000000;
-    border-top: 1px dashed #000000;
+    background-color: transparent;
+    color: var(--text);
+    border-top: 1px dashed var(--past);
+    margin-bottom: 0px;
+    text-align: left;
+    padding: 10px;
 }
 
 .past {
-    background-color: #d3d3d3;
-    color: black;
+    background-color: var(--past);
+    color: var(--white);
 }
 
 .current {
-    background-color: #ff6961;
-    color: white;
+    background-color: var(--current);
+    color: var(--white);
 }
 
 .future {
-    background-color: #77dd77;
-    color: white;
+    background-color: var(--future);
+    color: var(--white);
 }
 
 .saveBtn {
     border: 0;
-    border-left: 1px solid black;
+    border-left: 1px solid var(--white);
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #06aed5;
+    background-color: var(--inactiveButton);
     color: white;
     width: 100%;
     height: 100%;
+    transition: all 0.5s ease;
+}
+
+.saveBtn:hover {
+    background-color: var(--hoveredButton);
 }
 
 .saveBtn i {
@@ -84,5 +127,4 @@ textarea {
 
 .saveBtn:hover i {
     font-size: 20px;
-    transition: all 0.3s ease-in-out;
 }
