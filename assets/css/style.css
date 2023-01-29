@@ -32,6 +32,10 @@ textarea {
     border-radius: 15px;
 }
 
+.data .saveBtn {
+    background-color: #77dd77;
+}
+
 .container {
     margin-bottom: 2rem;
 }

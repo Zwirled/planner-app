@@ -43,6 +43,7 @@ function displaySchedule() {
 
         // Get the hour (on the hour e.g. 9:00am)
         let hour = moment().hour(i).minute(0).second(0);
+
         // Create a p tag for the hour, and add text
         let timeParagraph = $('<p>').text(hour.format('h:mma')).attr('class', 'col-2 hour');
         // Create an input field for the users inputted description (stored in local)
@@ -64,9 +65,9 @@ function displaySchedule() {
         // Add click event to save button
         saveButton.on('click', function () {
             // Get the task input value
-            let taskValue = taskInput.val();
+            let description = customDesc.val();
             // Save the task input value to localStorage
-            localStorage.setItem(hour.format('h:mma'), taskValue);
+            localStorage.setItem(hour.format('h:mma'), description);
         });
 
         /////
