@@ -1,3 +1,4 @@
+// Get current day paragraph to display date/time
 let currentDay = $('#currentDay');
 
 // Load functions on page load
@@ -8,6 +9,7 @@ $(document).ready(function () {
     displaySchedule();
 });
 
+// Create the function to display the date/time
 function displayDay() {
     // New variable to store the current day info
     let currentInfo = moment().format('DD MMM YYYY [at] hh:mm:ss a');
@@ -21,27 +23,30 @@ setInterval(displayDay, 1000);
 ////////
 ////////
 
+// Get the container to display schedule info
 let container = $('.container');
 
+// Create the function to display the schedule
 function displaySchedule() {
+    // Start with empty container
     container.empty();
+    // Initialise function
     init();
 
+    // For each hour between 9am and 5pm…
     for (let i = 9; i <= 17; i++) {
         // Create the time block div
         let timeBlock = $('<div>');
-        // Get the hour
+        // Get the hour (on the hour)
         let hour = moment().hour(i).minute(0).second(0);
-        // Create a p tag for the hour
+        // Create a p tag for the hour, and add text
         let timeParagraph = $('<p>').text(hour.format('h:mma'));
-        // Add hour to the p
-        timeParagraph.text(hour.format('h:mma'));
         // Create an input field for the task
-        let taskInput = $('<input>').attr('type', 'text').attr('class', 'task-input').val(localStorage.getItem(hour.format('h:mma')));
+        let customDesc = $('<textarea>').attr('type', 'text').attr('class', 'custom-description').val(localStorage.getItem(hour.format('h:mma')));
         // Create a button to save the task
-        let saveButton = $('<button>').text('Save').attr('class', 'save-button');
+        let saveButton = $('<button>').attr('class', 'saveBtn fas fa-bookmark');
         // Append the hour, task input and save button to the time block
-        timeBlock.append(timeParagraph, taskInput, saveButton);
+        timeBlock.append(timeParagraph, customDesc, saveButton);
         // Append the time block to the container
         container.append(timeBlock);
 
