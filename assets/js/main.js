@@ -25,6 +25,7 @@ let container = $('.container');
 
 function displaySchedule() {
     container.empty();
+    init();
 
     for (let i = 9; i <= 17; i++) {
         // Create the time block div
@@ -64,5 +65,15 @@ function displaySchedule() {
         }
     }
 }
+
+function init() {
+    let currentTime = moment().format('h:mma');
+    if (currentTime === '12:00am') {
+        localStorage.clear();
+    }
+}
+
+let nextHour = moment().startOf('hour').add(1, 'hour');
+let timeLeft = nextHour.diff(moment());
 
 setTimeout(displaySchedule, timeLeft);
